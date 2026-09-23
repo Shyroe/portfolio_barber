@@ -36,7 +36,7 @@ A implementação foi conduzida como um problema real de engenharia frontend, co
 - **preloads casados por breakpoint** para os recursos que participam do LCP — inclusive o `<picture>`, que sai do preload automático do framework e passa a ser explícito;
 - **fontes subsetadas** para os caracteres que a página usa, com apenas a fonte de display pré-carregada;
 - animação de entrada em CSS com o estado oculto sob `html.js`, para que uma falha de JavaScript não esconda conteúdo;
-- **nenhum domínio de terceiro no carregamento**: o embed do YouTube só é criado no clique (fachada de vídeo);
+- **nenhum domínio de terceiro no carregamento**, cobrado por teste: as origens de toda requisição durante o load e a rolagem têm de ser só a da página, e o embed do YouTube só é criado no clique (fachada de vídeo — sete botões e zero `iframe` antes dele);
 - medido no PageSpeed Insights oficial (5 execuções espaçadas por form factor, no artefato publicado): **desktop 100** de mediana (LCP 0,7s, CLS 0) e **mobile 90** de mediana (notas 89-94, LCP entre 2,9s e 3,2s, CLS 0). O LCP **observado** sem throttling é 332ms; o que o PSI publica é o valor simulado pelo modelo sob CPU 4x, limitado pelo parse do HTML — o teto prático do App Router com este volume de conteúdo.
 
 ### Acessibilidade
@@ -50,7 +50,7 @@ A implementação foi conduzida como um problema real de engenharia frontend, co
 ### Qualidade e regressão
 
 - testes de componente com **Vitest** e **React Testing Library**;
-- suíte **E2E** com Playwright cobrindo contrato do documento, âncoras, caminhos de conversão, ausência de overflow horizontal em **sete viewports** (320/390/768/1024/1100/1440/2560) e o funcionamento sem JavaScript;
+- suíte **E2E** com Playwright cobrindo contrato do documento, âncoras, caminhos de conversão, ausência de overflow horizontal em **sete viewports** (320/390/768/1024/1100/1440/2560), ausência de requisição de terceiro e o funcionamento sem JavaScript;
 - auditoria de acessibilidade com **Axe** integrada à suíte;
 - execução cross-browser opcional em **Firefox e WebKit**;
 - validação contínua com TypeScript, Biome, testes e build.

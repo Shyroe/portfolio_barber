@@ -276,3 +276,61 @@ test.describe("conversion paths", () => {
     await expect(footer.getByText(/Todos os direitos reservados/)).toBeVisible();
   });
 });
+
+/**
+ * A spec §7 exige **zero domínio de terceiro em runtime** e a §9 pedia essa
+ * conferência à mão, no DevTools. O único ponto que poderia furar o requisito é
+ * o YouTube: os sete vídeos (hero + seis depoimentos) são fachadas e o `iframe`
+ * só nasce no clique. Os dois testes abaixo provam as duas metades — o load
+ * limpo e a fachada que ainda entrega o vídeo.
+ */
+test.describe("third-party requests", () => {
+  test("loads every asset from the page origin", async ({ page }) => {
+    const origins = new Set<string>();
+
+    page.on("request", (request) => {
+      const { origin, protocol } = new URL(request.url());
+      // `data:` e `blob:` não são rede e não têm host.
+      if (protocol === "data:" || protocol === "blob:") return;
+      origins.add(origin);
+    });
+
+    await page.goto("/", { waitUntil: "load" });
+
+    // Rola em passos até o fim para que as imagens `loading="lazy"` abaixo da
+    // dobra também peçam o que têm de pedir: se alguma viesse de CDN, apareceria
+    // aqui. Esperar `networkidle` em vez de `img.complete` é de propósito — o
+    // carrossel de depoimentos mantém slides fora de tela que nunca disparam
+    // `load` e travariam a espera.
+    await page.evaluate(async () => {
+      const passo = window.innerHeight;
+      for (let y = 0; y < document.body.scrollHeight; y += passo) {
+        window.scrollTo(0, y);
+        await new Promise((resolve) => setTimeout(resolve, 100));
+      }
+      window.scrollTo(0, document.body.scrollHeight);
+    });
+    await page.waitForLoadState("networkidle");
+
+    expect([...origins]).toEqual([new URL(page.url()).origin]);
+  });
+
+  test("defers the YouTube iframe until the video is played", async ({ page }) => {
+    await page.goto("/", { waitUntil: "domcontentloaded" });
+
+    // `:has()` com seletor relativo: só os botões de fachada embrulham um
+    // `<picture>` com `<img>` — os do carrossel e do FAQ não.
+    const facades = page.locator("main button:has(> picture img)");
+    await expect(facades).toHaveCount(7);
+    await expect(page.locator('iframe[src*="youtube"]')).toHaveCount(0);
+
+    await facades.first().click();
+
+    const iframe = page.locator('iframe[src*="youtube-nocookie.com/embed/"]');
+    await expect(iframe).toHaveCount(1);
+    await expect(iframe).toHaveAttribute(
+      "src",
+      /^https:\/\/www\.youtube-nocookie\.com\/embed\/[\w-]+\?autoplay=1&rel=0$/,
+    );
+  });
+});
