@@ -37,7 +37,7 @@ A implementação foi conduzida como um problema real de engenharia frontend, co
 - **fontes subsetadas** para os caracteres que a página usa, com apenas a fonte de display pré-carregada;
 - animação de entrada em CSS com o estado oculto sob `html.js`, para que uma falha de JavaScript não esconda conteúdo;
 - **nenhum domínio de terceiro no carregamento**: o embed do YouTube só é criado no clique (fachada de vídeo);
-- medido no PageSpeed Insights oficial (mobile, 5 execuções espaçadas): **desktop 100** com LCP de 0,6s e **mobile 90-97** com LCP entre 2,4s e 3,0s. O LCP observado sem throttling é 332ms; o que o PSI publica é o valor simulado pelo modelo sob CPU 4x, limitado pelo parse do HTML.
+- medido no PageSpeed Insights oficial (5 execuções espaçadas por form factor, no artefato publicado): **desktop 100** de mediana (LCP 0,7s, CLS 0) e **mobile 90** de mediana (notas 89-94, LCP entre 2,9s e 3,2s, CLS 0). O LCP **observado** sem throttling é 332ms; o que o PSI publica é o valor simulado pelo modelo sob CPU 4x, limitado pelo parse do HTML — o teto prático do App Router com este volume de conteúdo.
 
 ### Acessibilidade
 
