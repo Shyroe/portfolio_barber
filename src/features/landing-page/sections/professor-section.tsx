@@ -1,17 +1,22 @@
 const professorCopy = {
   /*
-   * Bio literal do design, incluindo os desvios de digitação dele ("marcelo"
-   * minúsculo, "as vender", o espaço antes da vírgula em "estrutura de vendas ,").
-   * É copy aprovada — não corrijo.
+   * Bio do design, **localizada para a versão independente do portfólio**. O
+   * texto original era literal do design e descrevia o personagem da referência
+   * (ex-gerente de banco, canal de YouTube de empreendedorismo, 3 milhões por
+   * mês) — credenciais que não são de um professor de barbearia e que ficariam
+   * atribuídas a um nome fictício. A localização mantém a estrutura (4
+   * parágrafos) e as **linhas renderizadas** de cada um nos dois viewports
+   * (desktop 3/3/2/2, mobile 5/5/4/3), porque a altura do bloco entra na
+   * geometria da seção.
    */
   bio: [
-    "Olá, muito prazer meu nome é marcelo Carvalho, sou formado em administração, e trabalhei como gerente no banco do brasil por 10 anos e a 5, larguei tudo para empreender.",
-    "No começo não foi fácil, quebrei muito a cabeça, joguei muito “dinheiro fora” até conseguir dominar o mercado. Hoje vivo inteiramente da minha estrutura de vendas , faturando mais de 3 milhões mensais.",
-    "Meu canal de YouTube é indiscutivelmente um dos maiores canais focados em empreendedorismo do país em número de inscritos.",
-    "Eu amo Vender Online e acredito que as vender é o melhor caminho para começar um negócio de sucesso na internet.",
+    "Olá, muito prazer, meu nome é Rafael Moreira. Sou barbeiro há 18 anos: comecei atendendo em casa, aluguei minha primeira cadeira e hoje tenho três unidades próprias.",
+    "No começo não foi fácil: faltou cliente, sobrou insegurança e eu errei muito até entender o que fideliza de verdade. Hoje vivo da agenda cheia e formo novos barbeiros.",
+    "Meu canal no YouTube é onde eu mostro, na prática, as técnicas que uso na cadeira todos os dias e as contas de uma barbearia que dá lucro.",
+    "Eu acredito que barbearia é ofício e negócio ao mesmo tempo: técnica sem gestão não paga o aluguel.",
   ],
   eyebrow: "CONHEÇA SEU PROFESSOR",
-  name: "MARCELO CARVALHO",
+  name: "RAFAEL MOREIRA",
 } as const;
 
 const BG_DESKTOP = "/media/derived/professor-bg-desktop.webp";
