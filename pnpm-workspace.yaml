@@ -1,3 +1,10 @@
+# O pnpm 11 pede decisão explícita sobre scripts de instalação de terceiros. A
+# decisão deste projeto é **não** rodar nenhum: o binário do esbuild vem dos
+# pacotes de plataforma opcionais e o workerd não é usado no build. Sem isto um
+# clone limpo (ou o CI) falha com ERR_PNPM_IGNORED_BUILDS.
+allowBuilds:
+  esbuild: false
+  workerd: false
 ignoredBuiltDependencies:
   - esbuild
   - workerd
