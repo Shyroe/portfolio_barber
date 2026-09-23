@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "managedBy": "lp-barber-public-sync",
-  "sourceSha": "ef1b96d68bcd105ecf06bc70de21386f6602823a",
+  "sourceSha": "9a13c4a1f7594889a9d374c15b8ce964468c5ef1",
   "targetRepository": "Shyroe/portfolio_barber",
   "targetBranch": "main",
   "exportArchiveSha256": "0259c5456d3d637b3a8c79a64a52ec3723b6af4a0b782018950762f92b4c55d9"
