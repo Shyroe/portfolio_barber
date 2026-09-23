@@ -1,0 +1,19 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "lp-barber-pendev-v1",
+  "compatibility_date": "2026-09-18",
+  "workers_dev": true,
+  "preview_urls": true,
+  "routes": [
+    {
+      "pattern": "barber.leonardocamargo.dev.br",
+      "custom_domain": true
+    }
+  ],
+  "assets": {
+    "directory": "./out"
+  },
+  "observability": {
+    "enabled": true
+  }
+}

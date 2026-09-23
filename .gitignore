@@ -1,0 +1,39 @@
+node_modules
+.DS_Store
+
+# Next.js
+.next
+out
+next-env.d.ts
+*.tsbuildinfo
+
+# Validação
+coverage
+playwright-report
+test-results
+blob-report
+
+# Cloudflare
+.wrangler
+
+# pnpm (store local quando o store global não é gravável)
+.pnpm-store
+
+# Evidência visual: os relatórios são versionados, os bitmaps gerados não.
+# O design de origem (.pen) É versionado — ele é a fonte de verdade visual.
+ref/**/*.png
+ref/**/*.jpg
+ref/**/*.jpeg
+ref/**/*.webp
+exports/
+
+# Ambiente e scratch
+*.local
+.env
+.env.*
+!.env.example
+.agent-tmp
+.kilo/
+
+# Artefatos do export publico (allowlist em public-export.config.json)
+.project-artifacts/

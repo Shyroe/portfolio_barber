@@ -1,0 +1,409 @@
+/*
+ * `source(none)` + `@source "../"`: o CSS é gerado **só** a partir de `src/`.
+ * A detecção automática varre o repositório inteiro — inclusive `.agents/skills`
+ * (46 skills com exemplos de código) — e inflava a folha: 677 utilitários no CSS
+ * contra 401 classes que existem de fato no `src/`. Numa folha que bloqueia a
+ * renderização, esse excedente é LCP.
+ */
+@import "tailwindcss" source(none);
+@import "tw-animate-css";
+
+@source "../";
+
+/*
+ * Design system entry point.
+ *
+ * Tailwind CSS v4 has no `tailwind.config.ts`: tokens live here. The file is
+ * split in three layers:
+ *
+ *   1. `@theme inline` — maps CSS variables to Tailwind utilities. The `inline`
+ *      keyword matters: it keeps the utility pointing at the variable instead of
+ *      copying its value, which is what lets `.dark` re-theme at runtime.
+ *   2. `:root` / `.dark` — the actual token values, shared with shadcn/ui.
+ *   3. `@layer base` / `@utility` — global behaviour and reusable utilities.
+ *
+ * Keep authored CSS limited to tokens, global infrastructure and shared
+ * behaviour. Layout belongs to Tailwind utilities in the components.
+ */
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  /* ---- shadcn/ui semantic tokens ------------------------------------- */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* ---- landing-page tokens ------------------------------------------- */
+  /* Named `brand`/`highlight` instead of `accent` so they never collide with
+     the shadcn token of the same purpose above. */
+  --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-brand-soft: var(--brand-soft);
+  --color-panel: var(--panel);
+  --color-panel-foreground: var(--panel-foreground);
+  --color-highlight: var(--highlight);
+  --color-highlight-foreground: var(--highlight-foreground);
+  --color-highlight-strong: var(--highlight-strong);
+  --color-surface: var(--surface);
+  --color-surface-foreground: var(--surface-foreground);
+  --color-scrim: var(--scrim);
+
+  /* ---- typography ---------------------------------------------------- */
+  /* `--font-*` variables are injected by `next/font` in `src/app/fonts.ts`.
+     These are the design's families: Montserrat for body, Slackey for display,
+     Poppins for accent text. */
+  --font-sans: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-slackey), var(--font-montserrat), ui-sans-serif, sans-serif;
+  --font-accent: var(--font-poppins), var(--font-montserrat), ui-sans-serif, sans-serif;
+
+  /* ---- escala tipográfica do design ---------------------------------- */
+  /* Do censo em `ref/design/lp-barber/inventory.md`: o sufixo é o px exato do
+     design. Nomes por papel (body/display/cta/price) para o JSX dizer a
+     intenção, e o `line-height` vai junto porque o design varia (1 no display,
+     1.2 no destaque, 1.5 no texto corrido). */
+  --text-body-14: 14px;
+  --text-body-14--line-height: 1.5;
+  --text-body-15: 15px;
+  --text-body-15--line-height: 1.5;
+  --text-body-16: 16px;
+  --text-body-16--line-height: 1;
+  --text-body-18: 18px;
+  --text-body-18--line-height: 1;
+  --text-body-20: 20px;
+  --text-body-20--line-height: 1.2;
+  --text-body-23: 23px;
+  --text-body-23--line-height: 1.2;
+  --text-display-22: 22px;
+  --text-display-22--line-height: 1;
+  --text-display-25: 25px;
+  --text-display-25--line-height: 1;
+  --text-display-30: 30px;
+  --text-display-30--line-height: 1;
+  --text-display-31: 31px;
+  --text-display-31--line-height: 1;
+  --text-display-35: 35px;
+  --text-display-35--line-height: 1;
+  --text-display-38: 38px;
+  --text-display-38--line-height: 1;
+  --text-display-40: 40px;
+  --text-display-40--line-height: 1;
+  --text-display-47: 47px;
+  --text-display-47--line-height: 1;
+  --text-price-81: 81px;
+  --text-price-81--line-height: 1;
+  --text-price-110: 110px;
+  --text-price-110--line-height: 1;
+  --text-cta-18: 18px;
+  --text-cta-18--line-height: 1;
+  --text-cta-21: 21px;
+  --text-cta-21--line-height: 1;
+
+  /* ---- radii --------------------------------------------------------- */
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  /* ---- animations ---------------------------------------------------- */
+  --animate-accordion-down: accordion-down 300ms ease-out;
+  --animate-accordion-up: accordion-up 300ms ease-out;
+}
+
+:root {
+  color-scheme: light;
+
+  /* 5px é o raio dominante do design (60 usos, contra 2 de 10px). */
+  --radius: 0.3125rem;
+
+  /* -------------------------------------------------------------------------
+   * Paleta derivada do design (censo em `ref/design/lp-barber/inventory.md`).
+   * Cada valor é a conversão exata do hex do design para oklch — #ec8c08,
+   * #202020, #2b2a2a, #5b5a5a, #f6f6f6, #dd352e — e não uma aproximação.
+   * ---------------------------------------------------------------------- */
+  --background: oklch(1 0 0); /* #ffffff */
+  --foreground: oklch(0.244 0 0); /* #202020 */
+  --card: oklch(1 0 0); /* #ffffff */
+  --card-foreground: oklch(0.244 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.244 0 0);
+  /* O botão do design é laranja com texto preto (8,32:1). */
+  --primary: oklch(0.726 0.163 63.5); /* #ec8c08 */
+  --primary-foreground: oklch(0 0 0); /* #000000 */
+  --secondary: oklch(0.973 0 0); /* #f6f6f6 */
+  --secondary-foreground: oklch(0.244 0 0);
+  --muted: oklch(0.973 0 0);
+  /* #5b5a5a: 6,36:1 sobre o `--surface`, o fundo claro mais crítico. */
+  --muted-foreground: oklch(0.469 0 0);
+  /* Overlay do design (#ec8c08 a 27% sobre branco) como superfície de hover. */
+  --accent: oklch(0.919 0.055 75.9);
+  --accent-foreground: oklch(0.244 0 0);
+  --destructive: oklch(0.59 0.205 27.9); /* #dd352e */
+  /* O design não define cor de borda: uma tinta a 12% acompanha qualquer
+     superfície e não inventa um cinza fora da paleta. */
+  --border: oklch(0.244 0 0 / 12%);
+  --input: oklch(0.244 0 0 / 12%);
+  --ring: oklch(0.726 0.163 63.5);
+
+  /* ---- identidade landing --------------------------------------------- */
+  /* `#202020` é o fundo escuro canônico do design: 8 das 11 seções nascem
+     nele. O papel de "superfície escura da página" já era do `--brand` nos
+     componentes do boilerplate (`bg-brand text-brand-foreground`), então o
+     token passa a valer o que o design realmente pinta. */
+  --brand: oklch(0.244 0 0); /* #202020 */
+  --brand-foreground: oklch(1 0 0);
+  --brand-soft: oklch(0.469 0 0); /* #5b5a5a */
+  /* `#2b2a2a`: painel/card **dentro** do fundo escuro (Módulos, Bônus). */
+  --panel: oklch(0.286 0 0);
+  --panel-foreground: oklch(1 0 0);
+  --highlight: oklch(0.726 0.163 63.5); /* #ec8c08 */
+  --highlight-foreground: oklch(0 0 0); /* 8,32:1 sobre o laranja */
+  /* `--highlight` é cor de *fundo*: #ec8c08 mede 2,52:1 sobre branco e 2,34:1
+     sobre `--surface`. Texto ou glifo sobre fundo claro usa este tom escurecido
+     no mesmo matiz (5,56:1 no branco, 5,15:1 no surface). O gate do Axe reprova
+     a troca dos dois. */
+  --highlight-strong: oklch(0.526 0.163 63.5); /* #a94e00 */
+  --surface: oklch(0.973 0 0); /* #f6f6f6 */
+  --surface-foreground: oklch(0.244 0 0);
+  /* O véu do hero: `#020202` a 71% sobre a foto (o design traz a opacidade no
+     nó). É o que garante a leitura do título branco sobre a imagem. */
+  --scrim: oklch(0.085 0 0); /* #020202 */
+}
+
+.dark {
+  color-scheme: dark;
+
+  --background: oklch(0.244 0 0); /* #202020 */
+  --foreground: oklch(1 0 0);
+  --card: oklch(0.286 0 0); /* #2b2a2a */
+  --card-foreground: oklch(1 0 0);
+  --popover: oklch(0.286 0 0);
+  --popover-foreground: oklch(1 0 0);
+  --primary: oklch(0.726 0.163 63.5);
+  --primary-foreground: oklch(0 0 0);
+  --secondary: oklch(0.286 0 0);
+  --secondary-foreground: oklch(1 0 0);
+  --muted: oklch(0.286 0 0);
+  --muted-foreground: oklch(0.75 0 0);
+  --accent: oklch(0.35 0.03 63.5);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 27.9);
+  --border: oklch(1 0 0 / 14%);
+  --input: oklch(1 0 0 / 18%);
+  --ring: oklch(0.726 0.163 63.5);
+
+  --brand: oklch(0.286 0 0);
+  --brand-foreground: oklch(1 0 0);
+  --brand-soft: oklch(0.469 0 0);
+  /* Invertido de propósito: contra um fundo escuro o legível é o laranja claro,
+     não o tom escurecido que o tema claro usa sobre superfície clara. */
+  --highlight-strong: oklch(0.82 0.14 70);
+  --surface: oklch(0.286 0 0);
+  --surface-foreground: oklch(1 0 0);
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  html {
+    /* A landing page with decorative overflow must never scroll sideways on
+       small screens; `clip` keeps `position: sticky` working, unlike `hidden`. */
+    overflow-x: clip;
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    min-width: 320px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Every anchor target clears the sticky header. */
+  :where([id]) {
+    scroll-margin-top: 5.5rem;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background-color: var(--highlight);
+    color: var(--highlight-foreground);
+  }
+}
+
+/*
+ * Page container. 1140px matches the visual rhythm used across the author's
+ * landing pages and keeps long-form copy inside a comfortable measure.
+ */
+@utility container-page {
+  width: 100%;
+  max-width: 1140px;
+  margin-inline: auto;
+}
+
+/*
+ * Animação de entrada, com o contrato da referência publicada: os widgets saem
+ * com `elementor-invisible`, entram em `.animated` (1,25 s) ao cruzar a dobra, e
+ * usam `fadeIn` nos títulos e `jello` nos CTAs e cards. O estado oculto aqui é
+ * `opacity: 0` (nunca `visibility: hidden`, que tiraria o conteúdo da árvore de
+ * acessibilidade) e o componente `Reveal` só liga `data-visible`.
+ *
+ * O estado oculto vive sob `html.js`, marcado por um script inline no começo do
+ * `<body>`, e não direto em `[data-reveal]`: o conteúdo só pode ficar invisível
+ * quando há JavaScript de fato rodando. Sem JS — desligado, bloqueado ou com o
+ * chunk falhando — nada é escondido, que era o papel do antigo
+ * `@media (scripting: none)`.
+ *
+ * O hero fica fora da revelação (`landing-page.tsx`): em 4G lento medido
+ * (1,6 Mbps, 150 ms, CPU 4x), esperar a hidratação deixava o viewport vazio por
+ * 3,2 s, sem FCP nem LCP registrados.
+ */
+html.js [data-reveal] {
+  opacity: 0;
+}
+
+html.js [data-reveal][data-visible] {
+  animation-duration: 1.25s;
+  animation-fill-mode: both;
+  animation-timing-function: ease-out;
+  opacity: 1;
+}
+
+html.js [data-reveal][data-animation="fade-in"][data-visible] {
+  animation-name: fade-in;
+}
+
+html.js [data-reveal][data-animation="jello"][data-visible] {
+  animation-name: jello;
+}
+
+/*
+ * `jello` nos elementos que a referência marca com ele: os CTAs e os cards de
+ * Módulos e de Bônus. Roda junto com a revelação da seção, que é o gatilho mais
+ * próximo do `waypoint` por widget do Elementor.
+ */
+html.js [data-reveal][data-visible] [data-reveal-jello] {
+  animation: jello 1.25s ease-out both;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* `jello` é a animação de atenção do animate.css, que o Elementor publica. */
+@keyframes jello {
+  0%,
+  11.1%,
+  100% {
+    transform: none;
+  }
+
+  22.2% {
+    transform: skewX(-12.5deg) skewY(-12.5deg);
+  }
+
+  33.3% {
+    transform: skewX(6.25deg) skewY(6.25deg);
+  }
+
+  44.4% {
+    transform: skewX(-3.125deg) skewY(-3.125deg);
+  }
+
+  55.5% {
+    transform: skewX(1.5625deg) skewY(1.5625deg);
+  }
+
+  66.6% {
+    transform: skewX(-0.78125deg) skewY(-0.78125deg);
+  }
+
+  77.7% {
+    transform: skewX(0.390625deg) skewY(0.390625deg);
+  }
+
+  88.8% {
+    transform: skewX(-0.1953125deg) skewY(-0.1953125deg);
+  }
+}
+
+@keyframes accordion-down {
+  from {
+    height: 0;
+  }
+
+  to {
+    height: var(--radix-accordion-content-height);
+  }
+}
+
+@keyframes accordion-up {
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+
+  to {
+    height: 0;
+  }
+}
+
+/*
+ * Motion is decorative: never let it block reading, and never let it run for
+ * someone who asked for reduced motion.
+ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  /* Entrada: sem animação, o conteúdo já está visível. Precisa da mesma
+     especificidade do estado oculto (`html.js`) para vencer por ordem. */
+  html.js [data-reveal] {
+    opacity: 1;
+  }
+
+  html *,
+  html *::before,
+  html *::after {
+    /* These have to win over every component utility, including the arbitrary
+       `duration-*` values used in sections. `animation-duration: 0s` is avoided
+       on purpose: a zero duration would make `getAnimations()` report a
+       finished animation instead of none, and some engines skip `animationend`
+       entirely. 0.01ms is the smallest value that keeps the event contract. */
+    /* biome-ignore lint/complexity/noImportantStyles: must override component utilities */
+    animation-duration: 0.01ms !important;
+    /* biome-ignore lint/complexity/noImportantStyles: must override component utilities */
+    animation-iteration-count: 1 !important;
+    /* biome-ignore lint/complexity/noImportantStyles: must override component utilities */
+    transition-duration: 0.01ms !important;
+  }
+}
