@@ -9,8 +9,6 @@ const rodapeCopy = {
   title: "Gentleman Barber",
 } as const;
 
-const BG_DESKTOP = "/media/derived/rodape-bg-desktop.webp";
-const BG_MOBILE = "/media/derived/rodape-bg-mobile.webp";
 const LOGO = "/media/derived/hero-logo.webp";
 
 /**
@@ -40,17 +38,11 @@ export function FooterSection() {
 
   return (
     <footer className="relative isolate overflow-hidden bg-brand px-5 xl:px-0" id="rodape">
-      <picture>
-        <source media="(min-width: 1024px)" srcSet={BG_DESKTOP} />
-        <img
-          alt=""
-          aria-hidden="true"
-          className="absolute inset-0 -z-10 h-full w-full object-fill opacity-[0.19]"
-          height={527}
-          src={BG_MOBILE}
-          width={390}
-        />
-      </picture>
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 -z-10 bg-[url('/media/derived/rodape-bg-mobile.webp')] bg-no-repeat opacity-[0.19] lg:bg-[url('/media/derived/rodape-bg-desktop.webp')]"
+        style={{ backgroundSize: "100% 100%" }}
+      />
 
       <div className="container-page flex flex-col items-center gap-5 pt-10 pb-5 lg:h-[496.73px] lg:justify-center lg:py-[90px]">
         <p className="text-center font-sans text-body-16 text-white">{rodapeCopy.legal}</p>

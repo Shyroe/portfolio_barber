@@ -143,17 +143,11 @@ export function DepoimentosSection() {
       className="relative isolate overflow-hidden bg-brand px-5 xl:px-0"
       id="depoimentos"
     >
-      <picture>
-        <source media="(min-width: 1024px)" srcSet="/media/derived/depoimentos-bg-desktop.webp" />
-        <img
-          alt=""
-          aria-hidden="true"
-          className="absolute inset-0 -z-10 h-full w-full object-fill opacity-[0.19]"
-          height={2408}
-          src="/media/derived/depoimentos-bg-mobile.webp"
-          width={390}
-        />
-      </picture>
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 -z-10 bg-[url('/media/derived/depoimentos-bg-mobile.webp')] bg-no-repeat opacity-[0.19] lg:bg-[url('/media/derived/depoimentos-bg-desktop.webp')]"
+        style={{ backgroundSize: "100% 100%" }}
+      />
 
       <div className="container-page flex flex-col items-center gap-5 py-10 lg:py-[90px]">
         <h2

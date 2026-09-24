@@ -72,17 +72,11 @@ export function ModulosSection() {
       className="relative isolate overflow-hidden bg-brand"
       id="modulos"
     >
-      <picture>
-        <source media="(min-width: 1024px)" srcSet="/media/derived/destaque-pattern-desktop.webp" />
-        <img
-          alt=""
-          aria-hidden="true"
-          className="absolute inset-0 -z-10 size-full object-fill opacity-[0.19]"
-          height={2980}
-          src="/media/derived/destaque-pattern-mobile.webp"
-          width={390}
-        />
-      </picture>
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 -z-10 bg-[url('/media/derived/destaque-pattern-mobile.webp')] bg-no-repeat opacity-[0.19] lg:bg-[url('/media/derived/destaque-pattern-desktop.webp')]"
+        style={{ backgroundSize: "100% 100%" }}
+      />
 
       <div className="container-page px-5 xl:px-0">
         <div className="flex flex-col gap-5 py-10 lg:py-[90px]">

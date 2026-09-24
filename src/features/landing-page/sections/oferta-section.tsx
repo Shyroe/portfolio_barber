@@ -20,17 +20,11 @@ export function OfertaSection() {
       className="relative isolate overflow-hidden"
       id="oferta"
     >
-      <picture>
-        <source media="(min-width: 1024px)" srcSet="/media/derived/oferta-bg-desktop.webp" />
-        <img
-          alt=""
-          aria-hidden="true"
-          className="absolute inset-0 -z-20 size-full object-fill"
-          height={1058}
-          src="/media/derived/oferta-bg-mobile.webp"
-          width={390}
-        />
-      </picture>
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 -z-20 bg-[url('/media/derived/oferta-bg-mobile.webp')] bg-no-repeat lg:bg-[url('/media/derived/oferta-bg-desktop.webp')]"
+        style={{ backgroundSize: "100% 100%" }}
+      />
       <div aria-hidden="true" className="absolute inset-0 -z-10 bg-scrim/50" />
 
       <div className="container-page px-5 xl:px-0">

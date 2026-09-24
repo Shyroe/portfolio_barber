@@ -37,9 +37,6 @@ const bonusCopy = {
   title: "Bônus Exclusivos",
 } as const;
 
-const BG_DESKTOP = "/media/derived/bonus-bg-desktop.webp";
-const BG_MOBILE = "/media/derived/bonus-bg-mobile.webp";
-
 /**
  * Seção 8 do design (`Yv9Le` no desktop, `XMw53` no mobile): os 4 bônus.
  *
@@ -68,17 +65,11 @@ export function BonusSection() {
       className="relative isolate overflow-hidden bg-brand px-5 xl:px-0"
       id="bonus"
     >
-      <picture>
-        <source media="(min-width: 1024px)" srcSet={BG_DESKTOP} />
-        <img
-          alt=""
-          aria-hidden="true"
-          className="absolute inset-0 -z-10 h-full w-full object-fill opacity-[0.19]"
-          height={1744}
-          src={BG_MOBILE}
-          width={390}
-        />
-      </picture>
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 -z-10 bg-[url('/media/derived/bonus-bg-mobile.webp')] bg-no-repeat opacity-[0.19] lg:bg-[url('/media/derived/bonus-bg-desktop.webp')]"
+        style={{ backgroundSize: "100% 100%" }}
+      />
 
       <div className="container-page flex flex-col gap-5 py-10 lg:py-[90px]">
         <h2

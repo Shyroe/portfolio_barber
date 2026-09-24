@@ -52,17 +52,11 @@ export function DestaqueSection() {
       className="relative isolate overflow-hidden bg-brand py-10 lg:py-[100px]"
       id="destaque"
     >
-      <picture>
-        <source media="(min-width: 1024px)" srcSet="/media/derived/destaque-pattern-desktop.webp" />
-        <img
-          alt=""
-          aria-hidden="true"
-          className="absolute inset-0 -z-10 h-full w-full object-fill opacity-[0.19]"
-          height={1600}
-          src="/media/derived/destaque-pattern-mobile.webp"
-          width={328}
-        />
-      </picture>
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 -z-10 bg-[url('/media/derived/destaque-pattern-mobile.webp')] bg-no-repeat opacity-[0.19] lg:bg-[url('/media/derived/destaque-pattern-desktop.webp')]"
+        style={{ backgroundSize: "100% 100%" }}
+      />
 
       {/*
        * O design **não** dá padding horizontal a esta seção no mobile (`pad=[40,0]`):

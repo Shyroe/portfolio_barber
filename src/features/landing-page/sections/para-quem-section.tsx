@@ -29,17 +29,11 @@ export function ParaQuemSection() {
       className="relative isolate overflow-hidden"
       id="para-quem"
     >
-      <picture>
-        <source media="(min-width: 1024px)" srcSet="/media/derived/para-quem-bg-desktop.webp" />
-        <img
-          alt=""
-          aria-hidden="true"
-          className="absolute inset-0 -z-20 size-full object-fill"
-          height={509}
-          src="/media/derived/para-quem-bg-mobile.webp"
-          width={390}
-        />
-      </picture>
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 -z-20 bg-[url('/media/derived/para-quem-bg-mobile.webp')] bg-no-repeat lg:bg-[url('/media/derived/para-quem-bg-desktop.webp')]"
+        style={{ backgroundSize: "100% 100%" }}
+      />
       <div aria-hidden="true" className="absolute inset-0 -z-10 bg-scrim/50" />
 
       <div className="container-page px-5 xl:px-0">

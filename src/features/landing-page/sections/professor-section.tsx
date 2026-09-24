@@ -19,8 +19,6 @@ const professorCopy = {
   name: "RAFAEL MOREIRA",
 } as const;
 
-const BG_DESKTOP = "/media/derived/professor-bg-desktop.webp";
-const BG_MOBILE = "/media/derived/professor-bg-mobile.webp";
 const FOTO_DESKTOP = "/media/derived/professor-foto-desktop.webp";
 const FOTO_MOBILE = "/media/derived/professor-foto-mobile.webp";
 
@@ -48,17 +46,11 @@ export function ProfessorSection() {
       className="relative isolate overflow-hidden bg-brand px-5 xl:px-0"
       id="professor"
     >
-      <picture>
-        <source media="(min-width: 1024px)" srcSet={BG_DESKTOP} />
-        <img
-          alt=""
-          aria-hidden="true"
-          className="absolute inset-0 -z-10 h-full w-full object-fill"
-          height={1061}
-          src={BG_MOBILE}
-          width={390}
-        />
-      </picture>
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 -z-10 bg-[url('/media/derived/professor-bg-mobile.webp')] bg-no-repeat lg:bg-[url('/media/derived/professor-bg-desktop.webp')]"
+        style={{ backgroundSize: "100% 100%" }}
+      />
 
       <div className="container-page flex flex-col gap-[0.01px] pt-10 lg:flex-row lg:gap-0 lg:pt-[50px]">
         <div className="mx-auto flex w-full max-w-[552px] flex-col gap-5 p-[10px] lg:mx-0 lg:min-h-[667px] lg:w-1/2 lg:max-w-none lg:shrink-0 lg:justify-center">
