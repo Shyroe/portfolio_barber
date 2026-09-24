@@ -1,5 +1,7 @@
 # Gentleman Barber — Landing Page
 
+![Gentleman Barber — Preview](.github/assets/cover.webp)
+
 Desafio técnico frontend voltado ao desenvolvimento de uma landing page production-grade a partir de um **design no pen.dev**, com foco em **fidelidade pixel-perfect, responsividade contínua, acessibilidade, performance e engenharia de frontend**.
 
 O projeto combina um acabamento visual de alto nível com uma arquitetura moderna em **Next.js (App Router)** entregue como **export estático** no Cloudflare Workers: sem servidor de aplicação, sem otimizador de imagem em runtime e **zero requisição a domínio de terceiro no carregamento**.
@@ -37,7 +39,7 @@ A implementação foi conduzida como um problema real de engenharia frontend, co
 - **fontes subsetadas** para os caracteres que a página usa, com apenas a fonte de display pré-carregada;
 - animação de entrada em CSS com o estado oculto sob `html.js`, para que uma falha de JavaScript não esconda conteúdo;
 - **nenhum domínio de terceiro no carregamento**, cobrado por teste: as origens de toda requisição durante o load e a rolagem têm de ser só a da página, e o embed do YouTube só é criado no clique (fachada de vídeo — sete botões e zero `iframe` antes dele);
-- medido no PageSpeed Insights oficial (5 execuções espaçadas por form factor, no artefato publicado): **desktop 100** de mediana (LCP 0,7s, CLS 0) e **mobile 90** de mediana (notas 89-94, LCP entre 2,9s e 3,2s, CLS 0). O LCP **observado** sem throttling é 332ms; o que o PSI publica é o valor simulado pelo modelo sob CPU 4x, limitado pelo parse do HTML — o teto prático do App Router com este volume de conteúdo.
+- medido no PageSpeed Insights oficial (5 execuções espaçadas por form factor, no artefato publicado): **desktop 100** de mediana (LCP 0,7s, CLS 0) e **mobile 91** de mediana (notas 90-95, LCP 2,9s, CLS 0). O LCP **observado** sem throttling é 332ms; o que o PSI publica é o valor simulado pelo modelo sob CPU 4x, limitado pelo parse do HTML — o teto prático do App Router com este volume de conteúdo.
 
 ### Acessibilidade
 
