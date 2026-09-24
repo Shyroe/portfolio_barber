@@ -163,7 +163,20 @@ export default {
       format: "webp",
       purpose: "destaque gallery: degradê",
     },
-    // As cinco fotos da galeria somam 69 KB em webp e, com o limiar de
+    {
+      // Sexta foto da galeria. O design (e a referência) repetiam a 4ª na 6ª
+      // posição — o mesmo `destaque-barba.webp` com o mesmo `alt`, dois cards
+      // idênticos no grid. Esta é a imagem que fecha a série do produto e que a
+      // referência deixou de fora (`4.png`, o "PENTEADOS" entre o "CORTE" e o
+      // "DEGRADÊ"), então o grid passa a ter seis fotos distintas.
+      source: "destaque-penteado.webp",
+      output: "destaque-penteado.webp",
+      width: 740,
+      quality: 80,
+      format: "webp",
+      purpose: "destaque gallery: penteado",
+    },
+    // As seis fotos da galeria somam 85 KB em webp e, com o limiar de
     // `loading="lazy"` do Chromium em conexão lenta, entram no caminho crítico
     // mesmo estando abaixo da dobra — o AVIF corta ~50% e devolve banda ao LCP.
     {
@@ -205,6 +218,14 @@ export default {
       quality: 42,
       format: "avif",
       purpose: "galeria: degradê (AVIF)",
+    },
+    {
+      source: "destaque-penteado.webp",
+      output: "destaque-penteado.avif",
+      width: 740,
+      quality: 42,
+      format: "avif",
+      purpose: "galeria: penteado (AVIF)",
     },
     {
       // A textura é pintada a 19% de opacidade e esticada na seção inteira, o

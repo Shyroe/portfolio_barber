@@ -49,7 +49,7 @@ export function FaqAccordion({ items }: { items: readonly FaqItem[] }) {
           key={item.question}
           value={item.question}
         >
-          <AccordionTrigger className="relative min-h-[58px] w-full flex-none items-start rounded-none pt-[18px] pr-[38px] pb-[22px] pl-5 hover:no-underline focus-visible:ring-ring/50 [&>svg]:hidden">
+          <AccordionTrigger className="relative min-h-[58px] w-full flex-none cursor-pointer items-start rounded-none pt-[18px] pr-[38px] pb-[22px] pl-5 hover:no-underline focus-visible:ring-ring/50 [&>svg]:hidden">
             <span className="text-left font-sans text-body-18 font-medium leading-none text-brand-foreground">
               {item.question}
             </span>

@@ -68,7 +68,7 @@ export function DepoimentosCarousel({ slides, src }: DepoimentosCarouselProps) {
       <CarouselContent className="ml-0">
         {slides.map((alt) => (
           <CarouselItem
-            className="shrink-0 basis-[329.98px] pb-[6px] pl-0 lg:basis-[254.31px]"
+            className="shrink-0 basis-[329.98px] cursor-pointer pb-[6px] pl-0 lg:basis-[254.31px]"
             key={alt}
           >
             <img
@@ -91,7 +91,7 @@ export function DepoimentosCarousel({ slides, src }: DepoimentosCarouselProps) {
             aria-current={index === current ? "true" : undefined}
             aria-label={`Ir para a posição ${index + 1} de ${snaps}`}
             className={cn(
-              "size-[15px] rounded-full p-0 transition-colors",
+              "size-[15px] cursor-pointer rounded-full p-0 transition-colors",
               index === current ? "bg-highlight" : "bg-highlight/27 hover:bg-highlight/45",
             )}
             key={alt}

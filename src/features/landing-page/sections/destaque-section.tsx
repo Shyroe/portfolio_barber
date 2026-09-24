@@ -1,9 +1,13 @@
 const destaqueCopy = {
   /*
-   * `id` existe porque o design repete a 4ª foto na 6ª — mesmo `src` e mesmo
-   * `alt`. Sem ele a chave da lista colide (o React avisa a cada render e, com
-   * chave repetida, o comportamento da lista é indefinido) e a alternativa seria
-   * indexar por posição, que o Biome reprova com razão.
+   * `id` é a chave estável da lista, e não o índice: a ordem é a do design e o
+   * `alt` sozinho não identifica o item.
+   *
+   * O design repetia a 4ª foto na 6ª posição — mesmo `src` e mesmo `alt`, dois
+   * cards idênticos no grid, e a referência publicada faz o mesmo (repete
+   * `2-1024x1024-1.png`). A 6ª passou a ser a `destaque-penteado.webp`, a imagem
+   * que fecha a série do produto e que a referência deixou de fora; as seis
+   * fotos do grid agora são distintas. Registro em `docs/ASSET_PROVENANCE.md`.
    */
   gallery: [
     {
@@ -32,9 +36,9 @@ const destaqueCopy = {
       src: "/media/derived/destaque-degrade.webp",
     },
     {
-      alt: "Barba sendo aparada com navalha",
-      id: "barba-repetida",
-      src: "/media/derived/destaque-barba.webp",
+      alt: "Cabelo masculino sendo penteado e finalizado com pente",
+      id: "penteado",
+      src: "/media/derived/destaque-penteado.webp",
     },
   ],
   support: "VEJA UM POUCO DO QUE TE AGUARDA NO TREINAMENTO",
